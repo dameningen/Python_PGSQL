@@ -16,12 +16,12 @@ DB_USER = 'postgres'
 DB_PASSWORD = 'postgres'
 
 # メール送信設定
-SMTP_SERVER = 'smtp-aaa.aaa'
+SMTP_SERVER = 'smtp.aa'
 SMTP_PORT = 587
-SMTP_USER = 'aaaa@aaa.jp'
-SMTP_PASSWORD = 'pppppp'
-FROM_EMAIL = 'aaaa@aaa.jp'
-TO_EMAIL = 'aaaa@aaa.jp'
+SMTP_USER = 'a@a'
+SMTP_PASSWORD = 'ppp'
+FROM_EMAIL = 'a@a'
+TO_EMAIL = 'a@a'
 
 # SQL クエリを外部ファイルから読み込む
 def load_query_from_file(file_path):
@@ -40,7 +40,9 @@ def fetch_data_from_postgresql(query):
         # SQLクエリの実行
         with engine.connect() as connection:
             df = pd.read_sql(query, connection)
-            return df
+        connection.close()
+        #df = pd.read_sql(query, engine)
+        return df
     except Exception as e:
         print(f"Error fetching data: {e}")
         return None
