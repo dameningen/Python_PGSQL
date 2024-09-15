@@ -1,0 +1,7 @@
+### VS Code ###
+.vscode/
+*-workspace
+
+venv
+*.xlsx
+memo.txt
