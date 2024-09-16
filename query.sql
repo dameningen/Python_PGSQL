@@ -35,7 +35,7 @@ counts AS (
         comment
     WHERE
         is_active = TRUE
-        AND DATE(update_date) BETWEEN (SELECT start_date FROM params) AND (SELECT end_date FROM params)
+        AND update_date::DATE BETWEEN (SELECT start_date FROM params) AND (SELECT end_date FROM params)
     GROUP BY
         DATE(update_date)
 )
