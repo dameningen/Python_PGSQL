@@ -4,8 +4,8 @@
 -- 任意の年月を指定するパラメータ
 WITH params AS (
     SELECT
-        date_trunc('month', '2024-08-01'::DATE) AS start_date,
-        date_trunc('month', '2024-08-01'::DATE) + INTERVAL '1 month - 1 day' AS end_date
+        date_trunc('month', %(start_date_param)s::DATE) AS start_date,
+        date_trunc('month', %(end_date_param)s::DATE) + INTERVAL '1 month - 1 day' AS end_date
 ),
 date_range AS (
     SELECT generate_series(

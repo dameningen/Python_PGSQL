@@ -39,7 +39,7 @@ def fetch_data_from_postgresql(query):
         engine = create_engine(connection_string)
         # SQLクエリの実行
         with engine.connect() as connection:
-            df = pd.read_sql(query, connection)
+            df = pd.read_sql(query, connection, params={'start_date_param':'2024-09-01', 'end_date_param':'2024-09-01'})
         connection.close()
         #df = pd.read_sql(query, engine)
         return df
@@ -87,7 +87,7 @@ def send_email(subject, body, to_email, attachment_path):
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(FROM_EMAIL, SMTP_PASSWORD)
-            server.sendmail(FROM_EMAIL, to_email, msg.as_string())
+            #server.sendmail(FROM_EMAIL, to_email, msg.as_string())
             print("Email sent successfully!")
     except Exception as e:
         print(f"Error sending email: {e}")
