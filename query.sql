@@ -1,10 +1,16 @@
 -- #############
 -- 集計用SQL
 -- #############
-WITH date_range AS (
+-- 任意の年月を指定するパラメータ
+WITH params AS (
+    SELECT
+        date_trunc('month', '2024-08-01'::DATE) AS start_date,
+        date_trunc('month', '2024-08-01'::DATE) + INTERVAL '1 month - 1 day' AS end_date
+),
+date_range AS (
     SELECT generate_series(
-        date_trunc('month', CURRENT_DATE),  -- 月の初日
-        date_trunc('month', CURRENT_DATE) + INTERVAL '1 month - 1 day',  -- 月の最終日
+        (SELECT start_date FROM params),  -- 月の初日
+        (SELECT end_date FROM params),    -- 月の最終日
         '1 day'::INTERVAL
     )::DATE AS date
 ),
@@ -29,7 +35,7 @@ counts AS (
         comment
     WHERE
         is_active = TRUE
-        AND DATE(update_date) BETWEEN date_trunc('month', CURRENT_DATE) AND date_trunc('month', CURRENT_DATE) + INTERVAL '1 month - 1 day'
+        AND DATE(update_date) BETWEEN (SELECT start_date FROM params) AND (SELECT end_date FROM params)
     GROUP BY
         DATE(update_date)
 )
