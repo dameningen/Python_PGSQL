@@ -6,7 +6,11 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import io
+import os
 import re
+import logging
+import logging.config
+import json
 
 # PostgreSQL データベースの接続設定
 DB_HOST = 'localhost'
@@ -22,6 +26,9 @@ SMTP_USER = 'a@a'
 SMTP_PASSWORD = 'ppp'
 FROM_EMAIL = 'a@a'
 TO_EMAIL = 'a@a'
+
+# ロガーの取得
+logger = logging.getLogger(__name__)
 
 # SQL クエリを外部ファイルから読み込む
 def load_query_from_file(file_path):
@@ -83,16 +90,28 @@ def send_email(subject, body, to_email, attachment_path):
         print(f"Error attaching file: {e}")
 
     # メール送信
-    try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()
-            server.login(FROM_EMAIL, SMTP_PASSWORD)
-            #server.sendmail(FROM_EMAIL, to_email, msg.as_string())
-            print("Email sent successfully!")
-    except Exception as e:
-        print(f"Error sending email: {e}")
+    # TODO 一旦コメントアウト
+    # try:
+    #     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+    #         server.starttls()
+    #         server.login(FROM_EMAIL, SMTP_PASSWORD)
+    #         server.sendmail(FROM_EMAIL, to_email, msg.as_string())
+    #         print("Email sent successfully!")
+    # except Exception as e:
+    #     print(f"Error sending email: {e}")
+
+# ログ設定の読み込み
+def setup_logging(default_path='logging_config.json', default_level=logging.INFO):
+    if os.path.exists(default_path):
+        with open(default_path, 'r') as f:
+            config = json.load(f)
+        logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
 
 if __name__ == '__main__':
+    setup_logging()  # ログ設定の初期化
+    logger.info('test')
     # SQLクエリ
     # query = 'SELECT * FROM comment'
     # 外部 SQL ファイルのパス
