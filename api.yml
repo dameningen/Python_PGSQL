@@ -1,0 +1,154 @@
+openapi: 3.0.0
+info:
+  title: ChatGPT API
+  description: API for interacting with the ChatGPT model.
+  version: 1.0.0
+servers:
+  - url: https://api.openai.com/v1
+components:
+  securitySchemes:
+    Bearer:
+      type: "http"
+      scheme: "bearer"
+security:
+  - Bearer: []
+paths:
+  /chat/completions:
+    post:
+      summary: Create a chat completion
+      operationId: createChatCompletion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                model:
+                  type: string
+                  description: The model to use (e.g., "gpt-3.5-turbo").
+                messages:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        description: Role of the message sender ("user", "assistant", "system").
+                      content:
+                        type: string
+                        description: Content of the message.
+                temperature:
+                  type: number
+                  format: float
+                  description: Sampling temperature (0-2) to control randomness.
+                top_p:
+                  type: number
+                  format: float
+                  description: Nucleus sampling parameter (0-1).
+                frequency_penalty:
+                  type: number
+                  format: float
+                  description: Penalty for frequency of tokens (0-2).
+                presence_penalty:
+                  type: number
+                  format: float
+                  description: Penalty for presence of tokens (0-2).
+                max_completion_tokens:
+                  type: integer
+                  description: Maximum number of tokens to generate in the completion.
+                response_format:
+                  type: string
+                  description: Expected format of the response (e.g., "json", "xml").
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  object:
+                    type: string
+                  created:
+                    type: integer
+                  model:
+                    type: string
+                  choices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: integer
+                        message:
+                          type: object
+                          properties:
+                            role:
+                              type: string
+                            content:
+                              type: string
+                        finish_reason:
+                          type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      type:
+                        type: string
+                      param:
+                        type: string
+                      code:
+                        type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      type:
+                        type: string
+        '429':
+          description: Too many requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      type:
+                        type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                      type:
+                        type: string
