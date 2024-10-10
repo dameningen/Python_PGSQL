@@ -4,4 +4,5 @@
 
 venv
 *.xlsx
+!作業管理簿.xlsx
 memo.txt
