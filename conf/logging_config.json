@@ -10,11 +10,11 @@
         "console": {
             "class": "logging.StreamHandler",
             "formatter": "standard",
-            "level": "INFO"
+            "level": "DEBUG"
         },
         "file": {
             "class": "logging.FileHandler",
-            "filename": "app.log",
+            "filename": "logs/app.log",
             "formatter": "standard",
             "level": "INFO"
         }
@@ -22,7 +22,7 @@
     "loggers": {
         "": {
             "handlers": ["console", "file"],
-            "level": "INFO",
+            "level": "DEBUG",
             "propagate": true
         }
     }

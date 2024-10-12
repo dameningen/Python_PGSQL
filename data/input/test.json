@@ -1,0 +1,33 @@
+{
+    "apache_log": [
+        {
+            "id": "id_01",
+            "url": "/test/aaa.bbb/ccc"
+        },
+        {
+            "id": "id_02",
+            "url": "/test/aaa.bbb/ccc"
+        },
+        {
+            "id": "id_03",
+            "url": "/test/aaa.bbb/ddd"
+        }
+    ]
+}
+
+{
+    "id_type": [
+        {
+            "id": "id_01",
+            "type": "open"
+        },
+        {
+            "id": "id_02",
+            "type": "close"
+        },
+        {
+            "id": "id_03",
+            "type": "open"
+        }
+    ]
+}

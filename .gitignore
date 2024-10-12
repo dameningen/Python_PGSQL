@@ -1,8 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 ### VS Code ###
 .vscode/
 *-workspace
 
 venv
 *.xlsx
-!作業管理簿.xlsx
 memo.txt
+
+*.log
